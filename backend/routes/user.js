@@ -5,6 +5,7 @@ const {JWT_SECRET} = require('../config')
 const router = express.Router()
 const {z} = require('zod')
 const { JWT_SECRET } = require('../config')
+const {authMiddleware} = require('../middleware')
 
 const signupSchema = z.object({
     username: zod.string().email(),
@@ -46,7 +47,7 @@ const signinSchema = z.object({
     username : z.string().email(),
     password : z.string()
 })
-router.post('/signin',async (req,res)=>{
+router.post('/signin',authMiddleware,async (req,res)=>{
     const { success } = signinSchema.safeParse(req.body);
     if (!success) {
       res.status(411).json({
