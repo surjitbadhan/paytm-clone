@@ -3,15 +3,14 @@ const {User, Account} = require('../db')
 const jwt = require('jsonwebtoken')
 const {JWT_SECRET} = require('../config')
 const router = express.Router()
-const {z} = require('zod')
-const { JWT_SECRET } = require('../config')
+const z = require('zod')
 const {authMiddleware} = require('../middleware')
 
 const signupSchema = z.object({
-    username: zod.string().email(),
-	firstName: zod.string(),
-	lastName: zod.string(),
-	password: zod.string()
+    username: z.string().email(),
+	firstname: z.string(),
+	lastname: z.string(),
+	password: z.string()
   
   });
 
@@ -21,7 +20,7 @@ router.post("/signup", async (req, res) => {
         res.status(411).json({message:"Incorrect inputs"})
     }
     const existingUser = await User.findOne({
-        username : req.body.username
+        userName : req.body.username
     })
     if(existingUser){
         res.status(411).json({
@@ -29,10 +28,10 @@ router.post("/signup", async (req, res) => {
         })
     }
     const user = await User.create({
-        username : req.body.username,
+        userName : req.body.username,
         password : req.body.password,
-        firstname : req.body.firstname,
-        lastname : req.body.lastName
+        firstName : req.body.firstname,
+        lastName : req.body.lastName
     })
     const userId = user._id;
 
@@ -50,7 +49,7 @@ router.post("/signup", async (req, res) => {
 });
 
 const signinSchema = z.object({
-    username : z.string().email(),
+    userName : z.string().email(),
     password : z.string()
 })
 router.post('/signin',async (req,res)=>{
@@ -61,7 +60,7 @@ router.post('/signin',async (req,res)=>{
       });
     }
     const user = await User.findOne({
-        username : req.body.username,
+        userName : req.body.username,
         password : req.body.password
     })
     if(user){
@@ -80,15 +79,15 @@ router.post('/signin',async (req,res)=>{
 
 
 const updateSchema = z.object({
-	firstName: zod.string(),
-	lastName: zod.string(),
-	password: zod.string()
+	firstname: z.string(),
+	lastname: z.string(),
+	password: z.string()
   
   });
 
 
 router.put("/user", authMiddleware, async (req, res) => {
-  const { success } = signinSchema.safeParse(req.body);
+  const { success } = updateSchema.safeParse(req.body);
   if (!success) {
     res.status(411).json({
       message: "Error while updated information",
@@ -98,7 +97,11 @@ router.put("/user", authMiddleware, async (req, res) => {
     {
       _id: req.userId,
     },
-    req.body
+    {
+        firstName : req.body.firstname,
+        lastName : req.body.lastname,
+        password : req.body.password
+    }
   );
   res.json({
     message: "Updated Successfully",
@@ -122,7 +125,7 @@ router.get("/bulk", async (req, res) => {
 
     res.json({
         user: users.map(user => ({
-            username: user.username,
+            userName: user.userName,
             firstName: user.firstName,
             lastName: user.lastName,
             _id: user._id

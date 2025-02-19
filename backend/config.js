@@ -1,1 +1,3 @@
-export const JWT_SECRET = "jsonwebtoken"
+module.exports = {
+    JWT_SECRET : "jsonwebtoken"
+}

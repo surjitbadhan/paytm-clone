@@ -1,14 +1,11 @@
 const mongoose = require("mongoose");
 
 // mongoose connection
-mongoose.connect("mongodb://localhost:27017/paytm",{
-   useNewUrlParser: true,
-   useUnifiedTopology: true
-})
+mongoose.connect("mongodb://localhost:27017/paytm")
 
 // user schema
 const userSchema = new mongoose.Schema({
-    username : {
+    userName : {
         type : String,
         required : true,
         unique : true,
@@ -48,6 +45,11 @@ const accountSchema = new mongoose.Schema({
     }
 });
 
-export const Account = mongoose.model('Account', accountSchema);
-export const User = mongoose.model("User",userSchema)
+const Account = mongoose.model('Account', accountSchema);
+const User = mongoose.model("User",userSchema)
+
+module.exports = {
+    Account,
+    User
+}
 
