@@ -31,7 +31,7 @@ router.post("/signup", async (req, res) => {
         userName : req.body.username,
         password : req.body.password,
         firstName : req.body.firstname,
-        lastName : req.body.lastName
+        lastName : req.body.lastname
     })
     const userId = user._id;
 
