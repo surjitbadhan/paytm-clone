@@ -15,6 +15,7 @@ const signupSchema = z.object({
   });
 
 router.post("/signup", async (req, res) => {
+    try{
     const {success} = signupSchema.safeParse(req.body)
     if(!success){
         res.status(411).json({message:"Incorrect inputs"})
@@ -46,6 +47,10 @@ router.post("/signup", async (req, res) => {
         message:"User created successfully",
         token : token
     })
+}
+catch(e){
+    console.log
+}
 });
 
 const signinSchema = z.object({
