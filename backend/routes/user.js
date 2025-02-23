@@ -54,7 +54,7 @@ catch(e){
 });
 
 const signinSchema = z.object({
-    userName : z.string().email(),
+    username : z.string().email(),
     password : z.string()
 })
 router.post('/signin',async (req,res)=>{
@@ -112,6 +112,15 @@ router.put("/user", authMiddleware, async (req, res) => {
     message: "Updated Successfully",
   });
 });
+
+router.get("/userinfo",authMiddleware,async (req,res)=>{
+    const user = await User.find({
+        _id:req.userId
+    })
+    res.json({
+        firstname:user.firstName
+    })
+})
 
 router.get("/bulk", async (req, res) => {
   const filter = req.query.filter || "";
