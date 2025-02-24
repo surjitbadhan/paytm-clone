@@ -6,36 +6,37 @@ import axios from 'axios'
 const Dashboard = () => {
   const [balance,setBalance] = useState("")
   const [users,setUsers] = useState([])
-  const apiCallBalance =async ()=>{
-     const token = localStorage.getItem("token");
-     const res = await axios.get(
-       "http://localhost:3000/api/v1/account/balance",
-       {
-         headers: {
-           Authorization: "Bearer " + token,
-         },
-       }
-     );
-     setBalance(res.data.balance);
 
-  }
-  const apiCallUsers = useCallback(async ()=>{
-const token = localStorage.getItem("token");
-const res = await axios.get("http://localhost:3000/api/v1/user/bulk", {
-  headers: {
-    Authorization: "Bearer " + token,
-  },
-});
-setUsers(res.data.user);
-  },apiCallUsers)
-
-  useEffect(()=>{
+  useEffect(() => {
+    const apiCallBalance = async () => {
+      const token = localStorage.getItem("token");
+      const res = await axios.get(
+        "http://localhost:3000/api/v1/account/balance",
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      setBalance(res.balance);
+    };
+    apiCallBalance();
+  }, [balance]);
+  
+  useEffect(() => {
+    const apiCallUsers = async () => {
+      const token = localStorage.getItem("token");
+      const res = await axios.get("http://localhost:3000/api/v1/user/bulk", {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+      setUsers(res.data.user);
+    };
     apiCallUsers();
-  },[users])
-  useEffect(()=>{
-    apiCallBalance()
-     },[balance])
-  return (
+  }, [users]);
+ 
+ return (
     <div>
       <AppBar />
       <div className='m-8'>
