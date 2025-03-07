@@ -1,4 +1,12 @@
+import { useEffect } from "react"
+
 export const SendMoney = () => {
+    useEffect(()=>{
+        const token = localStorage.getItem('token')
+        if(!token){
+            Navigate('/home')
+        }
+    })
     return <div class="flex justify-center h-screen bg-gray-100">
         <div className="h-full flex flex-col justify-center">
             <div
@@ -9,7 +17,7 @@ export const SendMoney = () => {
                 </div>
                 <div class="p-6">
                 <div class="flex items-center space-x-4">
-                    <div class="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center">
+                    <div class="w-12 h-12 rounded-full bg-[#00d4ff] flex items-center justify-center">
                     <span class="text-2xl text-white">A</span>
                     </div>
                     <h3 class="text-2xl font-semibold">Friend's Name</h3>
@@ -29,7 +37,7 @@ export const SendMoney = () => {
                         placeholder="Enter amount"
                     />
                     </div>
-                    <button class="justify-center rounded-md text-sm font-medium ring-offset-background transition-colors h-10 px-4 py-2 w-full bg-green-500 text-white">
+                    <button class="justify-center rounded-md text-sm font-medium ring-offset-background transition-colors h-10 px-4 py-2 w-full bg-[#00d4ff] text-white">
                         Initiate Transfer
                     </button>
                 </div>

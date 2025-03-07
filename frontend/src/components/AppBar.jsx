@@ -18,17 +18,17 @@ export const AppBar = () => {
       });
   }, []);
   return (
-    <div className="shadow h-14 flex justify-between">
-      <div className="flex flex-col justify-center h-full ml-4">
+    <div className="shadow h-14 flex justify-between bg-gradient-to-r from-[#00d4ff] to-[#1b0979] ">
+      <div className="flex flex-col justify-center h-full ml-4 text-white">
         <Link to={"/"}>PayTM Clone</Link>
       </div>
       {localStorage.getItem('token') && <div className="flex">
-        <div className="flex flex-col justify-center h-full mr-4">
+        <div className="flex flex-col justify-center h-full mr-4 text-white">
           Hello{" "}
           {uname.split()[0].charAt(0).toUpperCase() + uname.split()[0].slice(1)}
         </div>
         <div className="rounded-full h-12 w-12 bg-slate-200 flex justify-center mt-1 mr-2">
-          <div className="flex flex-col justify-center h-full text-xl text-black-700">
+          <div className="flex flex-col justify-center h-full text-xl text-[#1b0979]">
             {uname.split()[0].slice(0, 1).toUpperCase()}
           </div>
         </div>

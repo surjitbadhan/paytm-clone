@@ -1,5 +1,6 @@
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import { Button } from "./Button"
+import { useNavigate } from "react-router-dom"
 
 export const Users = ({users}) => {
     // Replace with backend call
@@ -19,6 +20,7 @@ export const Users = ({users}) => {
 }
 
 function User({user}) {
+    const navigate = useNavigate()
     return <div className="flex justify-between">
         <div className="flex">
             <div className="rounded-full h-12 w-12 bg-slate-200 flex justify-center mt-1 mr-2">
@@ -34,7 +36,9 @@ function User({user}) {
         </div>
 
         <div className="flex flex-col justify-center h-ful">
-            <Button label={"Send Money"} />
+            <Button onClick={()=>{
+                navigate('/sendmoney')
+            }} label={"Send Money"} />
         </div>
     </div>
 }
